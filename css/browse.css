@@ -1,6 +1,17 @@
 body{
   background: #D4ECF1;
+  font-family: Arial, Helvetica, sans-serif;
 }
 table{
-  width: 100%;
+  width: 100%;  
+  border-collapse: collapse;
+}
+table td, table th{
+  border: 1px solid #000;
+}
+table .row1{
+  cursor: pointer;
+}
+table .row1:hover{
+  text-decoration: underline;
 }

@@ -52,6 +52,7 @@ class BrowseController extends Controller {
       //$config = 'Customer';
       $columns = array();
       
+      // SETTING KOLOM YANG DITAMPILKAN DAN DICARI DISINI
       if($config == 'Customer'){
         $columns = array(
             array(
@@ -150,6 +151,8 @@ class BrowseController extends Controller {
       $columns = $this->getConfigColumns($config);
       //var_dump($columns);
       
+      
+      // EDIT SQL QUERY DISINI
       if($config == 'Customer'){        
         $sql = "select * 
                 from CustomerData

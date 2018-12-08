@@ -8,5 +8,18 @@ Cara menggunakan:
 
 File yang perlu diedit / disesuaikan:
 ```sh
-BrowseController.php
+code/BrowseController.php 
 ```
+- method **getConfigColumns** --> menambahkan setting kolom yang ditampilkan & yang dicari
+- method **windowajax** --> bagian query --> variabel **$sql**
+```sh
+templates/Layout/BrowseIndex.ss
+```
+- edit bagian win = window.open('browse/window/**[Nama Config]**', 'MyWindow', "menubar=0,toolbar=0,width=600,height=400");
+- contoh: win = window.open('browse/window/**Customer**', 'MyWindow', "menubar=0,toolbar=0,width=600,height=400");
+- contoh: win = window.open('browse/window/**Team**', 'MyWindow', "menubar=0,toolbar=0,width=600,height=400");
+- edit method **setWindowResult** untuk menerima data yang dipilih dari window browse. data yang diterima bentuknya format JSON
+
+## Belum lengkap:
+- css perlu disempurnakan
+- browse belum bisa kalau JOIN table
