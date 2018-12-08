@@ -1,0 +1,9 @@
+---
+Name: adisroutes
+After:
+  - '#rootroutes'
+  - '#modelascontrollerroutes'
+---
+Director:
+  rules:
+   'browse': 'BrowseController'
