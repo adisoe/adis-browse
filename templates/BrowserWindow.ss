@@ -102,6 +102,9 @@
               html += '</tr>';
             }
             $('#table1').append(html);
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status+' '+thrownError);
           }
         });
       }
@@ -139,6 +142,7 @@
         $('body').on('click', '.row1', function () {
           //alert($(this).index());
           console.log(ajax_data[$(this).index() - 1]);
+          console.log(opener);
           opener.setWindowResult(ajax_data[$(this).index() - 1]);
         });
       })(jQuery);

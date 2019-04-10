@@ -52,30 +52,30 @@ class BrowseController extends Controller {
       //$config = 'Customer';
       $columns = array();
       
-      // SETTING KOLOM YANG DITAMPILKAN DAN DICARI DISINI
+      // ***** SETTING DISINI *****
       if($config == 'Customer'){
         $columns = array(
             array(
-                'Column' => 'ID',
+                'Column' => 'IdMCust',
                 'Type' => 'Number'
             ),
             array(
-                'Column' => 'LastEdited',
-                'Type' => 'Date',
-                'Required' => false
-            ),
-            array(
-                'Column' => 'Title',
+                'Column' => 'KdMCust',
                 'Type' => 'Text',
                 'Required' => false
             ),
             array(
-                'Column' => 'Content',
+                'Column' => 'NmMCust',
                 'Type' => 'Text',
                 'Required' => false
             ),
             array(
-                'Column' => 'Price',
+                'Column' => 'Alamat',
+                'Type' => 'Text',
+                'Required' => false
+            ),
+            array(
+                'Column' => 'Kota',
                 'Type' => 'Number',
                 'Required' => false
             )
@@ -103,6 +103,25 @@ class BrowseController extends Controller {
                 'Type' => 'Text',
                 'Required' => false
             )
+        );           
+      }
+      elseif($config == 'Supplier'){
+        $columns = array(
+            array(
+                'Column' => 'KdMSup',
+                'Type' => 'Text',
+                'Required' => false
+            ),
+            array(
+                'Column' => 'NmMSup',
+                'Type' => 'Text',
+                'Required' => false
+            ),
+            array(
+                'Column' => 'Telp1',
+                'Type' => 'Text',
+                'Required' => false
+            ),
         );           
       }
       return $columns;
@@ -155,12 +174,13 @@ class BrowseController extends Controller {
       // EDIT SQL QUERY DISINI
       if($config == 'Customer'){        
         $sql = "select * 
-                from CustomerData
-                where ID>0 $where
+                from mgarmcust
+                where IdMCust!='' $where
                 order by $order  
                 limit $limit
                 ";
-        $result = DB::query($sql);        
+        //$result = DB::query($sql);        
+        $result = SupplierAR::find_by_sql($sql);
       }
       elseif($config == 'Team'){        
         $sql = "select * 
@@ -169,7 +189,16 @@ class BrowseController extends Controller {
                 order by $order  
                 limit $limit
                 ";
-        $result = DB::query($sql);        
+        //$result = DB::query($sql);        
+        $result = SupplierAR::find_by_sql($sql);
+      }
+      elseif($config == 'Supplier'){        
+        $sql = "select *
+          from mgapmsup
+          where IdMSup!='' $where
+          order by $order
+          limit $limit";
+        $result = SupplierAR::find_by_sql($sql);
       }
       
       $arr_result = array();
@@ -177,7 +206,8 @@ class BrowseController extends Controller {
         // isi row sesuai array dari columns
         $temp = array();
         foreach($columns as $idx => $col){
-          $temp[$col['Column']] = $row[$col['Column']];
+          $column_lower = strtolower($col['Column']);
+          $temp[$col['Column']] = $row->$column_lower;
         }
         $arr_result[] = $temp;
       }     
