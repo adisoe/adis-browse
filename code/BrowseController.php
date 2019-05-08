@@ -124,6 +124,25 @@ class BrowseController extends Controller {
             ),
         );           
       }
+      elseif($config == 'File'){
+        $columns = array(
+            array(
+                'Column' => 'BuktiTSJ',
+                'Type' => 'Text',
+                'Required' => false
+            ),
+            array(
+                'Column' => 'TglTSJ',
+                'Type' => 'Text',
+                'Required' => false
+            ),
+            array(
+                'Column' => 'WBT',
+                'Type' => 'Text',
+                'Required' => false
+            ),
+        );           
+      }
       return $columns;
     }
 
@@ -171,6 +190,7 @@ class BrowseController extends Controller {
       //var_dump($columns);
       
       
+      // ***** SETTING DISINI *****
       // EDIT SQL QUERY DISINI
       if($config == 'Customer'){        
         $sql = "select * 
@@ -200,6 +220,14 @@ class BrowseController extends Controller {
           limit $limit";
         $result = SupplierAR::find_by_sql($sql);
       }
+      elseif($config == 'File'){        
+        $sql = "select *
+          from mgtrtsj
+          where IdTSJ!='' $where
+          order by $order
+          limit $limit";
+        $result = SupplierAR::find_by_sql($sql);
+      }
       
       $arr_result = array();
       foreach($result as $row){
@@ -207,7 +235,11 @@ class BrowseController extends Controller {
         $temp = array();
         foreach($columns as $idx => $col){
           $column_lower = strtolower($col['Column']);
-          $temp[$col['Column']] = $row->$column_lower;
+          if($col['Type'] == 'Date'){
+            $temp[$col['Column']] = $row->$column_lower->format('Y-m-d');
+          }else{
+            $temp[$col['Column']] = $row->$column_lower;
+          }
         }
         $arr_result[] = $temp;
       }     
